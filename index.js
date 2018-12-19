@@ -14,6 +14,15 @@ class BlockAds {
   getCssShouldBeHidden(domain) {
     return this.filter.buildCssHits(domain, this.genericHide);
   }
+
+  convertFileDataToRulesData(dataWhenReadFile) {
+    const lines = dataWhenReadFile.split("\n");
+    return lines.filter(line => {
+      try {
+        return new CssFilterRule(line, 2);
+      } catch (error) {}
+    });
+  }
 }
 
 module.exports = BlockAds;
