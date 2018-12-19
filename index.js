@@ -2,7 +2,7 @@ const CssFilter = require("./filter/rules/css-filter");
 const CssFilterRule = require("./filter/rules/css-filter-rule");
 
 class BlockAds {
-  constructor(rulesData) {
+  constructor(rulesData = ["example.org,~subdomain.example.org##selector"]) {
     const rules = rulesData.map(rule => new CssFilterRule(rule, 2));
     this.filter = new CssFilter(rules);
     this.genericHide =
