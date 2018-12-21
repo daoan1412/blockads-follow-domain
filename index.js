@@ -1,10 +1,20 @@
 const CssFilter = require("./filter/rules/css-filter");
 const CssFilterRule = require("./filter/rules/css-filter-rule");
+const UrlFilterRule = require("./filter/rules/url-filter-rule");
+const UrlFilter = require("./filter/rules/url-filter");
 
 class BlockAds {
-  constructor(rulesData = ["example.org,~subdomain.example.org##selector"]) {
-    const rules = rulesData.map(rule => new CssFilterRule(rule, 2));
-    this.filter = new CssFilter(rules);
+  constructor(rulesArray = ["example.org,~subdomain.example.org##selector"]) {
+    const cssRules = rulesArray.map(rule => {
+      try {
+        return new CssFilterRule(rule, 2);
+      } catch (error) {}
+    });
+
+    const urlRules = rulesArray.map(rule => new UrlFilterRule(rule));
+
+    this.filterCss = new CssFilter(cssRules);
+    this.filterUrl = new UrlFilter(urlRules);
     this.genericHide =
       CssFilter.RETRIEVE_TRADITIONAL_CSS +
       CssFilter.RETRIEVE_EXTCSS +
@@ -12,16 +22,17 @@ class BlockAds {
   }
 
   getCssShouldBeHidden(domain) {
-    return this.filter.buildCssHits(domain, this.genericHide);
+    return this.filterCss.buildCssHits(domain, this.genericHide);
+  }
+
+  isUrlAds(url) {
+    // need improve in future.
+    return !!this.filterUrl.isFiltered(url, "", "OTHER", true, false);
   }
 
   convertFileDataToRulesData(dataWhenReadFile) {
     const lines = dataWhenReadFile.split("\n");
-    return lines.filter(line => {
-      try {
-        return new CssFilterRule(line, 2);
-      } catch (error) {}
-    });
+    return lines;
   }
 }
 
