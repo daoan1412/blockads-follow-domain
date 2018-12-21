@@ -117,7 +117,6 @@ ShortcutsLookupTable.prototype = {
         }
       }
     }
-
     return result;
   },
 

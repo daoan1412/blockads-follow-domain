@@ -1,6 +1,6 @@
 const ShortcutsLookupTable = require("./shortcuts-lookup-table");
 const DomainsLookupTable = require("./domains-lookup-table");
-const utils = require('../../utils/common')
+const utils = require("../../utils/common");
 /**
  * Checks if rule filters request
  *
@@ -239,7 +239,6 @@ UrlFilterRuleLookupTable.prototype = {
 
     var urlLowerCase = url.toLowerCase();
     var rules = this.shortcutsLookupTable.lookupRules(urlLowerCase);
-
     // Check against rules with shortcuts
     if (rules && rules.length > 0) {
       rule = findFirstRule(
