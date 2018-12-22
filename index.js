@@ -2,6 +2,7 @@ const CssFilter = require("./filter/rules/css-filter");
 const CssFilterRule = require("./filter/rules/css-filter-rule");
 const UrlFilterRule = require("./filter/rules/url-filter-rule");
 const UrlFilter = require("./filter/rules/url-filter");
+const SafariContentBlockerConverter = require("./filter/rules/converter");
 
 class BlockAds {
   constructor(rulesArray = ["example.org,~subdomain.example.org##selector"]) {
@@ -52,8 +53,20 @@ class BlockAds {
         return line;
       }
     });
-
     return lines;
+  }
+
+  convertToContentBlocking(dataJson) {
+    const safariJSON = SafariContentBlockerConverter.convertArray(
+      dataJson,
+      null,
+      true
+    );
+    if (safariJSON.converted.length > 0) {
+      return safariJSON.converted.replace(/(\t|\n|)/gm, "");
+    } else {
+      return null;
+    }
   }
 }
 
