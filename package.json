@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "clean-css": "^4.2.1",
     "download-file-sync": "^1.0.4"
   }
 }

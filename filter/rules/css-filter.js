@@ -578,17 +578,10 @@ CssFilter.prototype = {
    * @returns {String}
    */
   _addMarkerToElemhideRule: function(rule) {
-    var ELEMHIDE_HIT_START = " { display: none!important; content: 'e1412";
-    var HIT_SEP = encodeURIComponent(";");
-    var HIT_END = "' !important;}\r\n";
-
+    var ELEMHIDE_HIT_START = " { display: none!important;}";
     var result = [];
     result.push(this._getRuleCssSelector(rule));
     result.push(ELEMHIDE_HIT_START);
-    result.push(rule.filterId);
-    result.push(HIT_SEP);
-    result.push(FilterRule.escapeRule(rule.ruleText));
-    result.push(HIT_END);
     return result.join("");
   },
 

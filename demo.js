@@ -23,7 +23,18 @@ console.log(
   )
 );
 
-const contentBlocking = adsInstance.convertToContentBlocking(
+const cssDomainRules = adsInstance.convertRulesDataToDomainCssRules(
   require("./data.json")
 );
-fs.writeFileSync("./adaway.json", contentBlocking);
+console.log(`cssDomainRules: ${cssDomainRules.length}`);
+fs.writeFileSync("./cssDomainRules.json", JSON.stringify(cssDomainRules));
+
+const cssCommonRules = adsInstance.convertRulesDataToCommonCssRules(
+  require("./data.json")
+);
+console.log(`cssCommonRules: ${cssCommonRules.length}`);
+fs.writeFileSync("./cssCommonRules.json", JSON.stringify(cssCommonRules));
+
+const cssCommonHidden = new adsClass().getCssCommonRules(require("./data.json"));
+fs.writeFileSync("./common.css", cssCommonHidden);
+
